@@ -12,3 +12,10 @@
 .ld-underline {
   text-decoration: underline;
 }
+
+@media print{
+  hr {
+    page-break-after: always;
+    visibility: hidden;
+  }
+}
