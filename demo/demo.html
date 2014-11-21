@@ -18,6 +18,57 @@
         <div class="wmd-panel">
             <div id="wmd-button-bar"></div>
             <textarea class="wmd-input" id="wmd-input">
+This is the *zeroth* editor.
+------------------------------
+
+# Markdown Extra
+
+## Numbering
+
+* (1.) __PURCHASE AND SALE OF SERIES SEED PREFERRED STOCK.__
+    * (1.1) __Sale and Issuance of Series Seed Preferred Stock.__
+        * (1.1.1) The Company shall adopt and file the Company's restated organizational documents, as applicable (e.g. certificate of incorporation), in substantially the form of Exhibit C attached to this Agreement (as the same may be amended, restated, supplemented or otherwise modified from time to time) (the "_Restated Charter_") with the Secretary of State of the State of Incorporation on or before the Initial Closing.
+        * (1.1.2) Subject to the terms and conditions of this Agreement, each investor listed as a "Purchaser" on Schedule 1 (each, a "Purchaser") shall purchase at the applicable Closing and the Company agrees to sell and issue to each Purchaser at such Closing that number of shares of Series Seed Preferred Stock of the Company ("Series Seed Preferred Stock") set forth opposite such Purchaser's name on Schedule 1, at a purchase price per share equal to the Purchase Price.
+
+## Tables 
+
+| Item             | Value |
+| ---------------- | -----:|
+| Air Conditioner  | $1600 |
+| <del>Phone</del> |   $12 |
+| *Pipe*           |    $1 |
+
+I've added just some basic borders and padding. Notice that span-level tags will
+still be rendered inside of the table. Also, you can specify a class for the generated
+tables using `Markdown.Extra.init(converter, {table_class: "table table-striped"})` for instance.
+
+## Fenced Code Blocks
+
+```javascript
+var foo = "bar";
+```
+
+You can also specify options. Markdown.Extra was given the following options
+for this editor.
+
+```javascript
+  Markdown.Extra.init(converter1, {
+    extensions: "all",
+    highlighter: "prettify"
+  });
+```
+
+
+
+</textarea>
+        </div>
+        <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+        
+        <br /> <br />
+
+                <div class="wmd-panel">
+            <div id="wmd-button-bar"></div>
+            <textarea class="wmd-input" id="wmd-input">
 This is the *first* editor.
 ------------------------------
 

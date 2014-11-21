@@ -174,7 +174,7 @@
     options = options || {};
     options.extensions = options.extensions || ["all"];
     if (contains(options.extensions, "all")) {
-      options.extensions = ["tables", "fenced_code_gfm", "def_list", "attr_list", "footnotes", "smartypants", "strikethrough", "newlines"];
+      options.extensions = ["tables", "fenced_code_gfm", "def_list", "attr_list", "footnotes", "smartypants", "strikethrough", "newlines", "ld_section_numbers"];
     }
     preBlockGamutTransformations.push("wrapHeaders");
     if (contains(options.extensions, "attr_list")) {
@@ -208,6 +208,15 @@
     }
     if (contains(options.extensions, "newlines")) {
       postSpanGamutTransformations.push("newlines");
+    }
+    if (contains(options.extensions, "ld_section_numbers")) {
+      preBlockGamutTransformations.push("legaldownSectionNumbers");
+      postConversionTransformations.push("legaldownSectionNumbersAddSpans");
+
+      // postNormalizationTransformations.push("testPostNormalization");
+      // preBlockGamutTransformations.push("testPreBlockGamut");
+      // postSpanGamutTransformations.push("testPostSpanGamut");
+      // postConversionTransformations.push("testPostConversion");
     }
     
     converter.hooks.chain("postNormalization", function(text) {
@@ -870,5 +879,41 @@
     });
   };
   
+  /***********************************************************
+  * Legaldown Section Numbers                                *
+  ************************************************************/
+
+  Markdown.Extra.prototype.legaldownSectionNumbers = function(text) {
+    // Mark each section number ordinal as ~ldordinal(1.1.) so that we can
+    // replace with a span later on.
+    return text.replace(/(\n *\* )\(([^)]*)\)/g, function(wholeMatch, prefix, ordinalText) {
+      return prefix + "~ldordinal(" + ordinalText + ")";
+    });
+  };
+  Markdown.Extra.prototype.legaldownSectionNumbersAddSpans = function(text) {
+    // Identify the ul element of each ordinal section.
+    text = text.replace(/(<ul>)<li>\~ldordinal/g, "<ul class=\"ld_numbered_section\">");
+    return text.replace(/~ldordinal\(([^)]*)\)/g, function(wholeMatch, ordinalText) {
+      return "<span class=\"ld_numbered_section_ordinal\">" + ordinalText + "</span>";
+    });
+  };
+
+  Markdown.Extra.prototype.testPostNormalization = function(text) {
+    console.log('postNormalization', text);
+    return text;
+  };
+  Markdown.Extra.prototype.testPreBlockGamut = function(text) {
+    console.log('PreBlockGamut', text);
+    return text;
+  };
+  Markdown.Extra.prototype.testPostSpanGamut = function(text) {
+    console.log('PostSpanGamut', text);
+    return text;
+  };
+  Markdown.Extra.prototype.testPostConversion = function(text) {
+    console.log('PostConversion', text);
+    return text;
+  };
+
 })();
 

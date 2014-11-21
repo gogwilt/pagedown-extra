@@ -592,6 +592,33 @@ describe("Markdown.Extra", function() {
         expect(html).toEqual(attrListHtml);
       });
     });
+
+    describe("with ld_section_numbers", function() {
+      beforeEach(function() {
+        sconv = Markdown.getSanitizingConverter();
+        Markdown.Extra.init(sconv, {extensions: "ld_section_numbers"});
+      });
+
+      it("should add a special class to each bullet point", function () {
+        var ldSections = "* (1.) __Sect__ (trouble?)\n    * (1.1.) __Sect__\n        * Just a bullet\n";
+        var html = sconv.makeHtml(ldSections);
+        expect(html).toMatch(/<ul class="ld_numbered_section">/);
+      });
+
+      it("should not add a special class to bullet points that do not have a number in parens", function () {
+        var ldSections = "* (1.) __Sect__ (trouble?)\n    * (1.1.) __Sect__\n        * Just a bullet\n";
+        var html = sconv.makeHtml(ldSections);
+        expect(html).toMatch(/<ul>/);
+      });
+
+      it("should remove the parentheses from bullet point numbers and enclose in a special element", function () {
+        var ldSections = "* (1.) __Sect__ (trouble?)\n    * (1.1.) __Sect__\n        * Just a bullet\n";
+        var html = sconv.makeHtml(ldSections);
+        expect(html).toMatch(/<span class="ld_numbered_section_ordinal">1.<\/span>/);
+      });
+
+    });
+
   });
 
   describe("when using the default converter", function() {
