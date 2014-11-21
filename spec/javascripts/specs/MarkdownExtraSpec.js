@@ -602,7 +602,7 @@ describe("Markdown.Extra", function() {
       it("should add a special class to each bullet point", function () {
         var ldSections = "* (1.) __Sect__ (trouble?)\n    * (1.1.) __Sect__\n        * Just a bullet\n";
         var html = sconv.makeHtml(ldSections);
-        expect(html).toMatch(/<ul class="ld_numbered_section">/);
+        expect(html).toMatch(/<ul class="ld-numbered-section">/);
       });
 
       it("should not add a special class to bullet points that do not have a number in parens", function () {
@@ -614,7 +614,27 @@ describe("Markdown.Extra", function() {
       it("should remove the parentheses from bullet point numbers and enclose in a special element", function () {
         var ldSections = "* (1.) __Sect__ (trouble?)\n    * (1.1.) __Sect__\n        * Just a bullet\n";
         var html = sconv.makeHtml(ldSections);
-        expect(html).toMatch(/<span class="ld_numbered_section_ordinal">1.<\/span>/);
+        expect(html).toMatch(/<span class="ld-numbered-section-ordinal">1.<\/span>/);
+      });
+
+    });
+
+    describe("with ld_underlines", function() {
+      beforeEach(function() {
+        sconv = Markdown.getSanitizingConverter();
+        Markdown.Extra.init(sconv, {extensions: "ld_underlines"});
+      });
+
+      it("should interpret single underscore as underline", function () {
+        var ldUnderlines = "_underline me_ __not me__";
+        var html = sconv.makeHtml(ldUnderlines);
+        expect(html).toMatch(/<span class="ld-underline">underline me<\/span>/);
+      });
+
+      it("should not interpret double underscore as underline", function () {
+        var ldUnderlines = "_underline me_ __not me__";
+        var html = sconv.makeHtml(ldUnderlines);
+        expect(html).not.toMatch(/<span class="ld-underline">not me<\/span>/);
       });
 
     });

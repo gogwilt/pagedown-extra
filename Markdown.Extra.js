@@ -174,7 +174,7 @@
     options = options || {};
     options.extensions = options.extensions || ["all"];
     if (contains(options.extensions, "all")) {
-      options.extensions = ["tables", "fenced_code_gfm", "def_list", "attr_list", "footnotes", "smartypants", "strikethrough", "newlines", "ld_section_numbers"];
+      options.extensions = ["tables", "fenced_code_gfm", "def_list", "attr_list", "footnotes", "smartypants", "strikethrough", "newlines", "ld_section_numbers", "ld_underlines"];
     }
     preBlockGamutTransformations.push("wrapHeaders");
     if (contains(options.extensions, "attr_list")) {
@@ -212,11 +212,15 @@
     if (contains(options.extensions, "ld_section_numbers")) {
       preBlockGamutTransformations.push("legaldownSectionNumbers");
       postConversionTransformations.push("legaldownSectionNumbersAddSpans");
+    }
+    if (contains(options.extensions, "ld_underlines")) {
+      preBlockGamutTransformations.push("legaldownUnderlinesDetection");
+      postConversionTransformations.push("legaldownUnderlinesReplacement");
 
-      postNormalizationTransformations.push("testPostNormalization");
-      preBlockGamutTransformations.push("testPreBlockGamut");
-      postSpanGamutTransformations.push("testPostSpanGamut");
-      postConversionTransformations.push("testPostConversion");
+      // postNormalizationTransformations.push("testPostNormalization");
+      // preBlockGamutTransformations.push("testPreBlockGamut");
+      // postSpanGamutTransformations.push("testPostSpanGamut");
+      // postConversionTransformations.push("testPostConversion");
     }
     
     converter.hooks.chain("postNormalization", function(text) {
@@ -897,6 +901,25 @@
       return "<span class=\"ld-numbered-section-ordinal\">" + ordinalText + "</span>";
     });
   };
+  
+  /***********************************************************
+  * Legaldown Underlines                                     *
+  ************************************************************/
+
+  Markdown.Extra.prototype.legaldownUnderlinesDetection = function(text) {
+    // Copied from _DoItalicsAndBold
+    // Replace the double underscores first with stuff
+    text = text.replace(/([\W_]|^)(__)(?=\S)([^\r]*?\S[\*_]*)\2([\W_]|$)/g,
+            "$1~ldstrong$3~ldstrongend$4");
+    text = text.replace(/([\W_]|^)(_)(?=\S)([^\r\*_]*?\S)\2([\W_]|$)/g,
+            "$1~ldunderline$3~ldunderlineend$4");
+    return text.replace(/~ldstrong(.*?)~ldstrongend/g, "__$1__")
+  };
+  Markdown.Extra.prototype.legaldownUnderlinesReplacement = function(text) {
+    return text.replace(/~ldunderline(.*?)~ldunderlineend/g,
+      "<span class=\"ld-underline\">$1</span>");
+  };
+
 
   Markdown.Extra.prototype.testPostNormalization = function(text) {
     console.log('postNormalization', text);
