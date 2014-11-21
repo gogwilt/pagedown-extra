@@ -1,0 +1,10 @@
+.ld-numbered-section {
+  list-style-type: none;
+  margin-left: 10px;
+}
+
+.ld-numbered-section-ordinal {
+  display: block;
+  float: left;
+  margin-left: -50px;
+}

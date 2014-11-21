@@ -213,10 +213,10 @@
       preBlockGamutTransformations.push("legaldownSectionNumbers");
       postConversionTransformations.push("legaldownSectionNumbersAddSpans");
 
-      // postNormalizationTransformations.push("testPostNormalization");
-      // preBlockGamutTransformations.push("testPreBlockGamut");
-      // postSpanGamutTransformations.push("testPostSpanGamut");
-      // postConversionTransformations.push("testPostConversion");
+      postNormalizationTransformations.push("testPostNormalization");
+      preBlockGamutTransformations.push("testPreBlockGamut");
+      postSpanGamutTransformations.push("testPostSpanGamut");
+      postConversionTransformations.push("testPostConversion");
     }
     
     converter.hooks.chain("postNormalization", function(text) {
@@ -892,9 +892,9 @@
   };
   Markdown.Extra.prototype.legaldownSectionNumbersAddSpans = function(text) {
     // Identify the ul element of each ordinal section.
-    text = text.replace(/(<ul>)<li>\~ldordinal/g, "<ul class=\"ld_numbered_section\">");
+    text = text.replace(/<ul>(\s*<li>\~ldordinal)/g, "<ul class=\"ld-numbered-section\">$1");
     return text.replace(/~ldordinal\(([^)]*)\)/g, function(wholeMatch, ordinalText) {
-      return "<span class=\"ld_numbered_section_ordinal\">" + ordinalText + "</span>";
+      return "<span class=\"ld-numbered-section-ordinal\">" + ordinalText + "</span>";
     });
   };
 
