@@ -1,4 +1,11 @@
 (function () {
+  // Awkward NodeJS shim
+  var Markdown;
+  if (typeof exports === "object" && typeof require === "function") // we're in a CommonJS (e.g. Node.js) module
+      Markdown = exports;
+  else
+      Markdown = window.Markdown;
+
   // A quick way to make sure we're only keeping span-level tags when we need to.
   // This isn't supposed to be foolproof. It's just a quick way to make sure we
   // keep all span-level tags returned by a pagedown converter. It should allow
