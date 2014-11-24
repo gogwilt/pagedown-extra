@@ -1,7 +1,12 @@
 {
   "name": "webapp",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "body-parser": "^1.9.3",
+    "express": "^4.10.3",
+    "method-override": "^2.3.0",
+    "morgan": "^1.5.0"
+  },
   "devDependencies": {
     "grunt": "^0.4.1",
     "grunt-autoprefixer": "^0.7.3",
@@ -17,6 +22,7 @@
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-uglify": "^0.4.0",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-express": "^1.4.1",
     "grunt-filerev": "^0.2.1",
     "grunt-google-cdn": "^0.4.0",
     "grunt-karma": "^0.9.0",

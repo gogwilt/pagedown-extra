@@ -1,6 +1,8 @@
 // Generated on 2014-11-24 using generator-angular 0.9.8
 'use strict';
 
+var path = require('path');
+
 // # Globbing
 // for performance reasons we're only matching one level down:
 // 'test/spec/{,*/}*.js'
@@ -60,6 +62,28 @@ module.exports = function (grunt) {
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      }
+    },
+
+    express: {
+      options: {
+        port: 9002,
+        // Change this to '0.0.0.0' to access the server from outside.
+        hostname: 'localhost',
+        livereload: 35729,
+        serverreload: true,
+        bases: [
+          path.resolve(__dirname, 'public'),
+          path.resolve(__dirname, '.tmp'),
+        ],
+        server: path.resolve(__dirname, 'server.js')
+      },
+      livereload: {
+      },
+      test: {
+        options: {
+          port: 9001
+        }
       }
     },
 
@@ -398,7 +422,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer',
-      'connect:livereload',
+      'express:livereload',
       'watch'
     ]);
   });
