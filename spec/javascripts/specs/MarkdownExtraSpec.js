@@ -645,6 +645,19 @@ describe("Markdown.Extra", function() {
 
     });
 
+    describe("with ld_blank_lines", function() {
+      beforeEach(function() {
+        sconv = Markdown.getSanitizingConverter();
+        Markdown.Extra.init(sconv, {extensions: "ld_blank_lines"});
+      });
+
+      it("should convert to a blank line", function() {
+        var ldBlankLine = "Hello: *____*";
+        var html = sconv.makeHtml(ldBlankLine);
+        expect(html).toMatch(/Hello: <span class="ld-blank-line">/);
+      });
+    });
+
   });
 
   describe("when using the default converter", function() {

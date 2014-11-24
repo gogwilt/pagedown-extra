@@ -181,7 +181,7 @@
     options = options || {};
     options.extensions = options.extensions || ["all"];
     if (contains(options.extensions, "all")) {
-      options.extensions = ["tables", "fenced_code_gfm", "def_list", "attr_list", "footnotes", "smartypants", "strikethrough", "newlines", "ld_section_numbers", "ld_underlines"];
+      options.extensions = ["tables", "fenced_code_gfm", "def_list", "attr_list", "footnotes", "smartypants", "strikethrough", "newlines", "ld_section_numbers", "ld_underlines", "ld_blank_lines"];
     }
     preBlockGamutTransformations.push("wrapHeaders");
     if (contains(options.extensions, "attr_list")) {
@@ -219,6 +219,10 @@
     if (contains(options.extensions, "ld_section_numbers")) {
       preBlockGamutTransformations.push("legaldownSectionNumbers");
       postConversionTransformations.push("legaldownSectionNumbersAddSpans");
+    }
+    if (contains(options.extensions, "ld_blank_lines")) {
+      preBlockGamutTransformations.push("legaldownBlankLinesDetection");
+      postConversionTransformations.push("legaldownBlankLinesReplacement");
     }
     if (contains(options.extensions, "ld_underlines")) {
       preBlockGamutTransformations.push("legaldownUnderlinesDetection");
@@ -928,6 +932,18 @@
       "<span class=\"ld-underline\">$1</span>");
   };
 
+  /***********************************************************
+  * Legaldown Blank lines                                    *
+  ************************************************************/
+
+  Markdown.Extra.prototype.legaldownBlankLinesDetection = function(text) {
+    return text.replace(/\*___*\*/g, "~ldblankline");
+  }
+
+  Markdown.Extra.prototype.legaldownBlankLinesReplacement = function(text) {
+    return text.replace(/~ldblankline/g, 
+      "<span class=\"ld-blank-line\">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>");
+  }
 
   Markdown.Extra.prototype.testPostNormalization = function(text) {
     console.log('postNormalization', text);

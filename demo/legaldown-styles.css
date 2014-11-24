@@ -13,13 +13,17 @@
   text-decoration: underline;
 }
 
+.ld-blank-line {
+  text-decoration: underline;
+}
+
 h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
 * {
   font-family: "Times New Roman", Times, serif;
-  font-size: 17pt;
+  font-size: 15px;
 }
 
 p {
