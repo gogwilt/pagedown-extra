@@ -4,6 +4,7 @@
 
 var fs = require('fs');
 var path = require('path');
+var Promise = require('bluebird');
 
 var Markdown = require('./pagedown/Markdown.Converter');
 var Sanitizer = require('./pagedown/Markdown.Sanitizer');
@@ -37,6 +38,8 @@ if (mdFile !== undefined && targetFolder !== undefined) {
   fs.writeFileSync(path.resolve(targetFolder, 'doc.html'),
     makeFullHtml(html));
   copyCssFile(targetFolder);
+  renderPdf(path.resolve(targetFolder, 'doc.html'),
+    path.resolve(targetFolder, 'doc.pdf'));
   return console.log('wrote to folder', targetFolder);
 }
 
@@ -60,4 +63,30 @@ function copyCssFile(targetFolder) {
 
   fs.writeFileSync(path.resolve(targetFolder, 'style.css'),
     fs.readFileSync(cssPath, 'utf8'));
+}
+
+function renderPdf(htmlDoc, pdfPath) {
+  var phantom = require('phantom');
+  var resolve = null;
+  var reject = null;
+  var promise = new Promise(function(_resolve, _reject) {
+    resolve = _resolve;
+    reject = _reject;
+  });
+  phantom.create(function(ph) {
+    ph.createPage(function(page) {
+      page.set('paperSize', {
+        format: 'letter',
+        orientation: 'portrait',
+        margin: '1in'
+      });
+      page.open(htmlDoc, function(status) {
+        page.render(pdfPath, function() {
+          ph.exit();
+          resolve();
+        });
+      });
+    });
+  });
+  return promise;
 }
