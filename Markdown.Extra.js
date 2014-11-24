@@ -903,7 +903,8 @@
   };
   Markdown.Extra.prototype.legaldownSectionNumbersAddSpans = function(text) {
     // Identify the ul element of each ordinal section.
-    text = text.replace(/<ul>(\s*<li>\~ldordinal)/g, "<ul class=\"ld-numbered-section\">$1");
+    text = text.replace(/<ul>(\s*<li>(<p>)?\~ldordinal)/g,
+      "<ul class=\"ld-numbered-section\">$1");
     return text.replace(/~ldordinal\(([^)]*)\)/g, function(wholeMatch, ordinalText) {
       return "<span class=\"ld-numbered-section-ordinal\">" + ordinalText + "</span>";
     });

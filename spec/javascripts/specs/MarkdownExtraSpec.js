@@ -617,6 +617,12 @@ describe("Markdown.Extra", function() {
         expect(html).toMatch(/<span class="ld-numbered-section-ordinal">1.<\/span>/);
       });
 
+      it("should handle the case where the list item has a paragraph element inside of it", function () {
+        var ldSections = "* (1.) A section\n\n* (2.) Another section (note the two newlines before it)\n";
+        var html = sconv.makeHtml(ldSections);
+        expect(html).toMatch(/<ul class="ld-numbered-section">/);
+      });
+
     });
 
     describe("with ld_underlines", function() {
