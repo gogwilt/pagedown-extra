@@ -1,5 +1,9 @@
 'use strict';
 
+var anchorSafeVariableName = function(name) {
+  return name.replace(/\s/g, '-').replace(/\[(.*)\]/, "$1");
+}
+
 /**
  * @ngdoc function
  * @name webappApp.controller:MainCtrl
@@ -9,6 +13,7 @@
  */
 angular.module('webappApp')
   .controller('MainCtrl', function ($scope, $http) {
+    $scope.variables = {};
     $scope.variableValues = {};
 
     $http.get('/documents/')
@@ -43,7 +48,7 @@ angular.module('webappApp')
           return doc.contents;
         });
         if (allContentsLoaded) {
-          $scope.variables = _.chain($scope.documents)
+          $scope.variables.names = _.chain($scope.documents)
           .map(function(doc) {
             return MarkdownVariables.getVariablesFromMarkdown(doc.contents);
           })
@@ -53,11 +58,33 @@ angular.module('webappApp')
         }
       }
     };
+
+    $scope.scrollToVariable = function(variableName) {
+      var variableId = 'ld-variable-'+anchorSafeVariableName(variableName);
+      var elt = $('#'+variableId);
+      var scroller = $('#ld-document-collection-preview');
+      scroller.animate({scrollTop: elt.offset().top + scroller.scrollTop() - scroller.offset().top}, 500);
+    };
   })
   .controller('ldRenderedMarkdownCtrl', function($scope, $sce) {
     var converter = Markdown.getSanitizingConverter();
     var contentCache = {}
     Markdown.Extra.init(converter, {extensions: "all"});
+
+    var insertVariableAnchors = function(html) {
+      var variableNames = $scope.variables.names;
+      if (!variableNames) {
+        variableNames = [];
+      }
+      for (var i=0; i < variableNames.length; i++) {
+        var variableName = variableNames[i];
+        html = html.replace(variableName,
+          '<span id="ld-variable-' + anchorSafeVariableName(variableName) + '">' +
+          variableNames[i] + '</span>');
+      }
+      return html;
+    }
+
     $scope.computeHtmlContents = function(contents) {
       if (contents) {
         if (!contentCache[contents]) {
@@ -69,7 +96,9 @@ angular.module('webappApp')
             variableValues[key] = value;
           }
         });
-        var interpolatedContents = MarkdownVariables.setVariableValues(variableValues, contentCache[contents]);
+        var interpolatedContents = contentCache[contents];
+        interpolatedContents = insertVariableAnchors(interpolatedContents);
+        interpolatedContents = MarkdownVariables.setVariableValues(variableValues, interpolatedContents);
         return $sce.trustAsHtml(interpolatedContents);
       } else {
         return null;
@@ -84,7 +113,8 @@ angular.module('webappApp')
       template: '<div class="ld-preview" data-ng-bind-html="computeHtmlContents(contents)"></div>',
       scope: {
         contents: '=contents',
-        variableValues: '=variableValues'
+        variableValues: '=variableValues',
+        variables: '=variables'
       }
     }
   });

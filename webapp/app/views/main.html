@@ -13,20 +13,31 @@
     </select>
   </p>
 </div>
-
-  <div ng-repeat="variable in variables" class="form-section">
-    <label class="form-label">
-      {{variable}}
-    </label>
-    <input type="text" ng-model="variableValues[variable]" class="form-control"/>
-  </div>
-
-<ul>
-  <li ng-repeat="doc in documents">
-    {{doc.docName}}
-    <div ld-rendered-markdown
-      contents="doc.contents"
-      variable-values="variableValues">
+<div class="container">
+  <div class="row">
+    <div class="col-xs-3">
+      <div id="ld-document-variables">
+        <div ng-repeat="variable in variables.names" class="form-section">
+          <label class="form-label">
+            {{variable}}
+          </label>
+          <input type="text" ng-model="variableValues[variable]" class="form-control" ng-click="scrollToVariable(variable)"/>
+        </div>
+      </div>
     </div>
-  </li>
-</ul>
+    <div class="col-xs-9">
+      <div id="ld-document-collection-preview">
+        <ul>
+          <li ng-repeat="doc in documents">
+            {{doc.docName}}
+            <div ld-rendered-markdown
+              contents="doc.contents"
+              variable-values="variableValues"
+              variables="variables">
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
