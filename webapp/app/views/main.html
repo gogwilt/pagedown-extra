@@ -14,11 +14,19 @@
   </p>
 </div>
 
+  <div ng-repeat="variable in variables" class="form-section">
+    <label class="form-label">
+      {{variable}}
+    </label>
+    <input type="text" ng-model="variableValues[variable]" class="form-control"/>
+  </div>
+
 <ul>
   <li ng-repeat="doc in documents">
     {{doc.docName}}
     <div ld-rendered-markdown
-      contents="doc.contents">
+      contents="doc.contents"
+      variable-values="variableValues">
     </div>
   </li>
 </ul>

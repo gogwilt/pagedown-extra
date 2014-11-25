@@ -9,6 +9,8 @@
  */
 angular.module('webappApp')
   .controller('MainCtrl', function ($scope, $http) {
+    $scope.variableValues = {};
+
     $http.get('/documents/')
     .success(function(data, status) {
       $scope.projects = data;
@@ -29,17 +31,46 @@ angular.module('webappApp')
           $http.get('/documents/' + collectionName + '/' + doc.docName)
           .success(function(data, status) {
             docMap[doc.docName].contents = data;
+            $scope.identifyVariables();
           });
         });
       });
     };
+
+    $scope.identifyVariables = function() {
+      if ($scope.documents) {
+        var allContentsLoaded = _.all($scope.documents, function(doc) {
+          return doc.contents;
+        });
+        if (allContentsLoaded) {
+          $scope.variables = _.chain($scope.documents)
+          .map(function(doc) {
+            return MarkdownVariables.getVariablesFromMarkdown(doc.contents);
+          })
+          .flatten()
+          .uniq()
+          .value();
+        }
+      }
+    };
   })
   .controller('ldRenderedMarkdownCtrl', function($scope, $sce) {
     var converter = Markdown.getSanitizingConverter();
+    var contentCache = {}
     Markdown.Extra.init(converter, {extensions: "all"});
     $scope.computeHtmlContents = function(contents) {
       if (contents) {
-        return $sce.trustAsHtml(converter.makeHtml(contents));
+        if (!contentCache[contents]) {
+          contentCache[contents] = converter.makeHtml(contents);
+        }
+        var variableValues = {};
+        _.each($scope.variableValues, function(value, key) {
+          if (value && value.length !== 0) {
+            variableValues[key] = value;
+          }
+        });
+        var interpolatedContents = MarkdownVariables.setVariableValues(variableValues, contentCache[contents]);
+        return $sce.trustAsHtml(interpolatedContents);
       } else {
         return null;
       }
@@ -52,7 +83,8 @@ angular.module('webappApp')
       transclude: true,
       template: '<div class="ld-preview" data-ng-bind-html="computeHtmlContents(contents)"></div>',
       scope: {
-        contents: '=contents'
+        contents: '=contents',
+        variableValues: '=variableValues'
       }
     }
   });
