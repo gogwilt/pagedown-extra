@@ -59,28 +59,38 @@ angular.module('webappApp')
       }
     };
 
-    $scope.scrollToVariable = function(variableName) {
+    var scrollToVariable = function(variableName) {
       var variableId = 'ld-variable-'+anchorSafeVariableName(variableName);
       var elt = $('#'+variableId);
       var scroller = $('#ld-document-collection-preview');
       scroller.animate({scrollTop: elt.offset().top + scroller.scrollTop() - scroller.offset().top}, 500);
     };
+
+    $scope.focusVariable = function(variableName) {
+      scrollToVariable(variableName);
+      $scope.variables.focusedVariable = variableName;
+    }
   })
   .controller('ldRenderedMarkdownCtrl', function($scope, $sce) {
     var converter = Markdown.getSanitizingConverter();
     var contentCache = {}
     Markdown.Extra.init(converter, {extensions: "all"});
 
-    var insertVariableAnchors = function(html) {
+    var insertVariableAnchors = function(html, focusedVariable) {
       var variableNames = $scope.variables.names;
       if (!variableNames) {
         variableNames = [];
       }
       for (var i=0; i < variableNames.length; i++) {
         var variableName = variableNames[i];
+        var spanTag = '<span id="ld-variable-' + anchorSafeVariableName(variableName) + '"' +
+          ' class="ld-variable';
+        if (focusedVariable === variableName) {
+          spanTag += ' ld-focused-variable'
+        }
+        spanTag += '">'
         html = html.replace(variableName,
-          '<span id="ld-variable-' + anchorSafeVariableName(variableName) + '">' +
-          variableNames[i] + '</span>');
+          spanTag + variableNames[i] + '</span>');
       }
       return html;
     }
@@ -97,7 +107,7 @@ angular.module('webappApp')
           }
         });
         var interpolatedContents = contentCache[contents];
-        interpolatedContents = insertVariableAnchors(interpolatedContents);
+        interpolatedContents = insertVariableAnchors(interpolatedContents, $scope.variables.focusedVariable);
         interpolatedContents = MarkdownVariables.setVariableValues(variableValues, interpolatedContents);
         return $sce.trustAsHtml(interpolatedContents);
       } else {
