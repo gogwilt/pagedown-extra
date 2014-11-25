@@ -18,7 +18,8 @@ app.use(express.static(path.resolve(__dirname, 'app')));
 app.use('/pagedown', express.static(path.resolve(__dirname, 'pagedown')))
 app.use('/pagedown', express.static(__dirname))
 
-module.exports = app;
 
 var documentRoutes = require('./server/routes/documents');
 app.use('/documents', documentRoutes);
+
+module.exports = app;
