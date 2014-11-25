@@ -1,13 +1,13 @@
-[Corporation Name in All Caps]
+[Company Name]
 
 # RESTATED CERTIFICATE OF INCORPORATION
 
 (Pursuant to Sections 242 and 245 of the
 General Corporation Law of the State of Delaware)
 
-[Corporation Name], a corporation organized and existing under and by virtue of the provisions of the General Corporation Law of the State of Delaware (the "_General Corporation Law_"), does hereby certify as follows.
+[Company Name], a corporation organized and existing under and by virtue of the provisions of the General Corporation Law of the State of Delaware (the "_General Corporation Law_"), does hereby certify as follows.
 
-* (1.) The name of this corporation is [Corporation Name] and that this corporation was originally incorporated pursuant to the General Corporation Law on [Date] under the name [Corporation Name].   
+* (1.) The name of this corporation is [Company Name] and that this corporation was originally incorporated pursuant to the General Corporation Law on [Date] under the name [Company Name].   
 
 * (2.) The Board of Directors of this corporation duly adopted resolutions proposing to amend and restate the Certificate of Incorporation of this corporation, declaring said amendment and restatement to be advisable and in the best interests of this corporation and its stockholders, and authorizing the appropriate officers of this corporation to solicit the consent of the stockholders therefor, which resolution setting forth the proposed amendment and restatement is as follows.
 
@@ -17,23 +17,23 @@ General Corporation Law of the State of Delaware)
 
 * (4.)  This Restated Certificate of Incorporation, which restates and integrates and further amends the provisions of this corporation’s Certificate of Incorporation, has been duly adopted in accordance with Sections 242 and 245 of the General Corporation Law. 
 
-IN WITNESS WHEREOF, this Restated Certificate of Incorporation has been executed by a duly authorized officer of this corporation on this [DAY day of MONTH, YEAR].
+IN WITNESS WHEREOF, this Restated Certificate of Incorporation has been executed by a duly authorized officer of this corporation on this [Certificate of Incorporation Filing Date].
 
 
-By:	*__________________________*						
+By:						
 
-[Officer Name], [Officer Title]
+[Company Officer Name], [Company Officer Title]
  
 -------------------------
 # Exhibit A
 -------------------------
-[Corporation Name in All Caps]
+[Company Name]
 
 # RESTATED CERTIFICATE OF INCORPORATION
 
 ## ARTICLE I: NAME. 
 
-The name of this corporation is *[Corporation Name]*  (the "_Corporation_").
+The name of this corporation is *[Company Name]*  (the "_Corporation_").
 
 ## ARTICLE II: REGISTERED OFFICE.
 
@@ -67,7 +67,7 @@ The following rights, powers privileges and restrictions, qualifications, and li
 
 * (2.) Voting.  
 
-  The holders of the Common Stock are entitled to one vote for each share of Common Stock held at all meetings of stockholders (and written actions in lieu of meetings).  Unless required by law, there shall be no cumulative voting.  The number of authorized shares of Common Stock may be increased or decreased (but not below the number of shares thereof then outstanding) by (in addition to any vote of the holders of one or more series of Preferred Stock that may be required by the terms of the Restated Certificate) the affirmative vote of the holders of shares of capital stock of the Corporation representing a majority of the votes represented by all outstanding shares of capital stock of the Corporation entitled to vote, irrespective of the provisions of Section 242(b)(2) of the General Corporation Law.
+  \The holders of the Common Stock are entitled to one vote for each share of Common Stock held at all meetings of stockholders (and written actions in lieu of meetings).  Unless required by law, there shall be no cumulative voting.  The number of authorized shares of Common Stock may be increased or decreased (but not below the number of shares thereof then outstanding) by (in addition to any vote of the holders of one or more series of Preferred Stock that may be required by the terms of the Restated Certificate) the affirmative vote of the holders of shares of capital stock of the Corporation representing a majority of the votes represented by all outstanding shares of capital stock of the Corporation entitled to vote, irrespective of the provisions of Section 242(b)(2) of the General Corporation Law.
 
 ### B. PREFERRED STOCK
 
