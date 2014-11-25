@@ -52,6 +52,6 @@
   "scripts": {
     "test": "grunt test",
     "start": "node launchServer.js",
-    "postinstall": "bower install && grunt compass:server autoprefixer"
+    "postinstall": "bower install && ./node_modules/grunt_cli/bin/grunt compass:server autoprefixer"
   }
 }
