@@ -3,6 +3,20 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+.ld-preview {
+  @import "../../demo/legaldown-styles.scss";
+}
+
+.ld-preview * {
+  font-size: 12px;
+}
+
+.ld-preview {
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 0 10px #eee;
+  padding: 40px;
+}
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;

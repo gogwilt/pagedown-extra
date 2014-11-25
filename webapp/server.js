@@ -15,6 +15,10 @@ app.use(methodOverride());
 app.use(express.static(path.resolve(__dirname, '.tmp')));
 app.use('/bower_components', express.static(path.resolve(__dirname, 'bower_components')));
 app.use(express.static(path.resolve(__dirname, 'app')));
+app.use('/pagedown', express.static(path.resolve(__dirname, '../pagedown')))
+app.use('/pagedown', express.static(path.resolve(__dirname, '..')))
 
-module.exports = app
+module.exports = app;
 
+var documentRoutes = require('./server/routes/documents');
+app.use('/documents', documentRoutes);

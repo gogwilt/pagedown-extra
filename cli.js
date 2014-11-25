@@ -59,7 +59,7 @@ function makeFullHtml(html) {
 }
 
 function copyCssFile(targetFolder) {
-  var cssPath = path.resolve(path.dirname(userArgs[1]), 'demo', 'legaldown-styles.css');
+  var cssPath = path.resolve(path.dirname(userArgs[1]), 'demo', 'legaldown-styles.scss');
 
   fs.writeFileSync(path.resolve(targetFolder, 'style.css'),
     fs.readFileSync(cssPath, 'utf8'));
